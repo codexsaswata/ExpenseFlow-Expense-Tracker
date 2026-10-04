@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Expense Tracker Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">₹</div>
+            <div>
+                <h2>ExpenseFlow</h2>
+                <span>Expense Tracker</span>
+            </div>
+        </div>
+
+        <nav>
+            <a href="#" class="active">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="#expenses">
+                <span>▤</span>
+                Expenses
+            </a>
+
+            <a href="#analytics">
+                <span>◔</span>
+                Analytics
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="tech">
+                <strong>Powered by</strong>
+                <span>Spring Boot + PostgreSQL</span>
+            </div>
+        </div>
+
+    </aside>
+
+
+    <!-- Main -->
+    <main class="main">
+
+        <!-- Header -->
+        <header class="topbar">
+
+            <div>
+                <p class="welcome">Welcome back 👋</p>
+                <h1>Expense Dashboard</h1>
+            </div>
+
+            <button class="add-btn" onclick="openModal()">
+                + Add Expense
+            </button>
+
+        </header>
+
+
+        <!-- KPI Cards -->
+        <section class="stats">
+
+            <div class="stat-card">
+                <div class="stat-icon purple">₹</div>
+
+                <div>
+                    <span>Total Expenses</span>
+                    <h2 id="totalExpense">₹0.00</h2>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon blue">#</div>
+
+                <div>
+                    <span>Transactions</span>
+                    <h2 id="transactionCount">0</h2>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon green">↗</div>
+
+                <div>
+                    <span>Average Expense</span>
+                    <h2 id="averageExpense">₹0.00</h2>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon orange">★</div>
+
+                <div>
+                    <span>Top Category</span>
+                    <h2 id="topCategory">-</h2>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Content Grid -->
+        <section class="content-grid">
+
+            <!-- Expenses -->
+            <div class="panel expenses-panel" id="expenses">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h2>Recent Expenses</h2>
+                        <p>Manage your spending records</p>
+                    </div>
+
+                    <div class="filters">
+
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search expenses..."
+                            oninput="renderExpenses()"
+                        >
+
+                        <select id="categoryFilter" onchange="renderExpenses()">
+                            <option value="all">All Categories</option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+                        <tr>
+                            <th>Expense</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+
+                        <tbody id="expenseTable">
+                        </tbody>
+
+                    </table>
+
+                    <div id="emptyState" class="empty-state">
+                        <div>🧾</div>
+                        <h3>No expenses found</h3>
+                        <p>Add your first expense to get started.</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Analytics -->
+            <div class="panel analytics-panel" id="analytics">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h2>Spending by Category</h2>
+                        <p>Where your money is going</p>
+                    </div>
+
+                </div>
+
+                <div id="categoryChart" class="category-chart">
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- Add/Edit Modal -->
+
+<div id="expenseModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+                <h2 id="modalTitle">Add Expense</h2>
+                <p>Enter your expense details</p>
+            </div>
+
+            <button class="close-btn" onclick="closeModal()">×</button>
+
+        </div>
+
+
+        <form id="expenseForm">
+
+            <input type="hidden" id="expenseId">
+
+
+            <div class="form-group">
+
+                <label>Title</label>
+
+                <input
+                    type="text"
+                    id="title"
+                    placeholder="e.g. Groceries"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>Amount</label>
+
+                    <input
+                        type="number"
+                        id="amount"
+                        step="0.01"
+                        min="0"
+                        placeholder="850.00"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Category</label>
+
+                    <select id="category" required>
+
+                        <option value="">Select category</option>
+
+                        <option value="Food">Food</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Bills">Bills</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Health">Health</option>
+                        <option value="Education">Education</option>
+                        <option value="Travel">Travel</option>
+                        <option value="Other">Other</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Date</label>
+
+                <input
+                    type="date"
+                    id="expenseDate"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Description</label>
+
+                <textarea
+                    id="description"
+                    placeholder="Optional description..."
+                    rows="3"
+                ></textarea>
+
+            </div>
+
+
+            <button type="submit" class="submit-btn">
+                Save Expense
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<div id="toast" class="toast"></div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
