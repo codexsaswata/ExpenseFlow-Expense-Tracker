@@ -1,38 +1,147 @@
-# Expense Tracker REST API
+# 💰 ExpenseFlow — Expense Tracker
 
-A Spring Boot REST API for managing personal expenses. Built with Java, Spring Boot, Spring Web, Spring Data JPA, Hibernate, Bean Validation, and H2 for zero-setup local development.
+A full-stack **Expense Tracker application** built with **Java Spring Boot, PostgreSQL, and HTML/CSS/JavaScript**.
 
-## Features
-- Create, read, update and delete expenses
-- Search expenses by category
-- Calculate total expenses
-- Input validation
-- RESTful endpoints
-- JPA/Hibernate persistence
-- H2 in-memory database for quick local setup
+The application allows users to add, view, update, delete, search, and analyze their expenses through a clean and interactive dashboard.
 
-## Endpoints
+---
 
-| Method | Endpoint | Purpose |
-|---|---|---|
-| POST | `/api/expenses` | Add expense |
-| GET | `/api/expenses` | Get all expenses |
-| GET | `/api/expenses/{id}` | Get expense by ID |
-| PUT | `/api/expenses/{id}` | Update expense |
-| DELETE | `/api/expenses/{id}` | Delete expense |
-| GET | `/api/expenses/category/{category}` | Filter by category |
-| GET | `/api/expenses/total` | Calculate total |
+## 🚀 Features
 
-## Run
-Requirements: Java 17+ and Maven.
+### 💸 Expense Management
+- Add new expenses
+- View all expenses
+- Update existing expenses
+- Delete expenses
+- Search expenses
+- Filter expenses by category
+- View total expenses
 
-```bash
-mvn spring-boot:run
+### 📊 Dashboard & Analytics
+- Total expenses
+- Total number of transactions
+- Average expense
+- Top spending category
+- Category-wise spending analytics
+- Recent expenses table
+- Interactive expense dashboard
+
+### 🛡️ Backend
+- RESTful API architecture
+- Spring Boot
+- Spring Data JPA
+- Hibernate ORM
+- Bean Validation
+- PostgreSQL database
+- Global exception handling
+
+### 🎨 Frontend
+- Responsive dashboard
+- Expense management interface
+- Add/Edit expense modal
+- Category filtering
+- Search functionality
+- Spending analytics
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+- Java
+- Spring Boot 3.5.6
+- Spring Web
+- Spring Data JPA
+- Hibernate
+- Bean Validation
+- Maven
+
+### Database
+- PostgreSQL
+
+### Frontend
+- HTML5
+- CSS3
+- JavaScript
+
+---
+
+## 🏗️ Project Architecture
+
+```text
+Frontend
+   │
+   │ HTTP Requests
+   ▼
+Spring Boot REST API
+   │
+   ▼
+Controller
+   │
+   ▼
+Service
+   │
+   ▼
+Repository
+   │
+   ▼
+JPA / Hibernate
+   │
+   ▼
+PostgreSQL
 ```
 
-API runs at `http://localhost:8080`.
+---
 
-## Example request
+## 📁 Project Structure
+
+```text
+ExpenseTrackerAPI/
+│
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── com/
+│       │       └── saswata/
+│       │           └── expensetracker/
+│       │               ├── Expense.java
+│       │               ├── ExpenseController.java
+│       │               ├── ExpenseService.java
+│       │               ├── ExpenseRepository.java
+│       │               ├── GlobalExceptionHandler.java
+│       │               └── ExpenseTrackerApiApplication.java
+│       │
+│       └── resources/
+│           ├── application.properties
+│           └── static/
+│               ├── index.html
+│               ├── style.css
+│               └── script.js
+│
+├── pom.xml
+├── README.md
+└── .gitignore
+```
+
+---
+
+## 🔌 REST API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/expenses` | Add a new expense |
+| `GET` | `/api/expenses` | Get all expenses |
+| `GET` | `/api/expenses/{id}` | Get expense by ID |
+| `PUT` | `/api/expenses/{id}` | Update an expense |
+| `DELETE` | `/api/expenses/{id}` | Delete an expense |
+| `GET` | `/api/expenses/category/{category}` | Get expenses by category |
+| `GET` | `/api/expenses/total` | Calculate total expenses |
+
+---
+
+## 📝 Example API Request
+
+### POST `/api/expenses`
 
 ```json
 {
@@ -44,13 +153,161 @@ API runs at `http://localhost:8080`.
 }
 ```
 
-## Architecture
+### Example Response
 
-Controller -> Service -> Repository -> JPA/Hibernate -> H2
+```json
+{
+  "id": 1,
+  "title": "Groceries",
+  "amount": 850.50,
+  "category": "Food",
+  "expenseDate": "2026-10-05",
+  "description": "Weekly groceries"
+}
+```
 
-## Future improvements
-- MySQL profile
-- Authentication
-- Monthly budgets
-- Category-wise analytics
+---
+
+## 🗄️ Database Configuration
+
+The application uses **PostgreSQL**.
+
+Create a database named:
+
+```sql
+CREATE DATABASE expense_tracker;
+```
+
+Then configure your PostgreSQL credentials in:
+
+```text
+src/main/resources/application.properties
+```
+
+Example:
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/expense_tracker
+spring.datasource.username=postgres
+spring.datasource.password=YOUR_PASSWORD
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+```
+
+> ⚠️ Do not upload your real PostgreSQL password to a public GitHub repository.
+
+---
+
+## ▶️ How to Run
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/ExpenseTrackerAPI.git
+```
+
+### 2. Navigate into the project
+
+```bash
+cd ExpenseTrackerAPI
+```
+
+### 3. Make sure PostgreSQL is running
+
+Create the database:
+
+```sql
+CREATE DATABASE expense_tracker;
+```
+
+### 4. Configure database credentials
+
+Update:
+
+```text
+src/main/resources/application.properties
+```
+
+with your PostgreSQL username and password.
+
+### 5. Start the application
+
+```bash
+mvn spring-boot:run
+```
+
+The application will start at:
+
+```text
+http://localhost:8080
+```
+
+---
+
+## 🖥️ Dashboard
+
+The application provides a web-based dashboard where users can:
+
+- Add expenses directly from the frontend
+- Search expenses
+- Filter expenses by category
+- Edit expenses
+- Delete expenses
+- View total spending
+- View transaction count
+- View average expense
+- Analyze spending by category
+
+---
+
+## 📊 Analytics
+
+The dashboard provides category-based spending analytics to help users understand where their money is being spent.
+
+Example categories include:
+
+- 🍔 Food
+- 🚗 Transport
+- 🛍️ Shopping
+- 💡 Bills
+- 🎬 Entertainment
+- 🏥 Health
+- 📚 Education
+- ✈️ Travel
+- 📦 Other
+
+---
+
+## 🔮 Future Improvements
+
+- User authentication and authorization
+- Monthly budget management
+- Monthly spending analytics
+- Income tracking
+- Advanced charts and reports
+- Export expenses to CSV/PDF
 - Swagger/OpenAPI documentation
+- JWT authentication
+- Cloud deployment
+- Responsive mobile interface
+
+---
+
+## 👨‍💻 Author
+
+**Saswata Pati**
+
+🎓 B.Tech — Information Technology
+
+🔗 LinkedIn:  
+https://www.linkedin.com/in/saswata-pati-66614317b/
+
+💻 GitHub:  
+https://github.com/codexsaswata
+
+---
+
+## ⭐ If you find this project useful
+
+Give the repository a ⭐ on GitHub!
